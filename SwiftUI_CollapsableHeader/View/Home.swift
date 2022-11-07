@@ -26,7 +26,7 @@ struct Home: View {
                 // ヘッダー周り
                 GeometryReader { proxy in
                     
-                    TopBar(topEdge: topEdge, offset: $offset)
+                    TopBar(topEdge: topEdge, offset: $offset, maxHeight: maxHeight)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: getHeaderHeight(), alignment: .bottom)
@@ -48,8 +48,9 @@ struct Home: View {
                                 })
                             }
                                 .padding(.horizontal)
-                                .frame(height: navHeight + topEdge)
+                                .frame(height: navHeight)
                                 .foregroundColor(.white)
+                                .padding(.top, topEdge)
 
                             , alignment: .top
                         )
@@ -100,8 +101,8 @@ struct Home_Previews: PreviewProvider {
 struct TopBar: View {
     
     var topEdge: CGFloat
-
     @Binding var offset: CGFloat
+    var maxHeight: CGFloat
     
     var body: some View {
         
@@ -122,6 +123,16 @@ struct TopBar: View {
         }
         .padding()
         .padding(.bottom)
+        .opacity(getOpacity())
+    }
+    
+    // 透明度計算
+    func getOpacity() -> CGFloat {
+        
+        let progress = -offset / 90
+        
+        let opacity = 1 - progress
+        return offset > 0 ? 1 : opacity
     }
 }
 
