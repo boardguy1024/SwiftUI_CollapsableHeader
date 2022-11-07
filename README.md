@@ -1,5 +1,5 @@
 # SwiftUI_CollapsableHeader
-## Urban Animating header View using ViewModifier based on SwiftUI🤯
+Urban Animating header View using ViewModifier based on SwiftUI🤯
 
 ### スクロールによるカスタムヘッダーのアニメーションサンプル
 - ViewModifierを用いて OffsetModifierを作成し、parentContentからminYを親Viewに渡してアニメーションを行う処理です。
