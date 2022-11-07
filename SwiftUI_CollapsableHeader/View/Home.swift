@@ -32,6 +32,7 @@ struct Home: View {
                         .frame(height: getHeaderHeight(), alignment: .bottom)
                         .background(Color("TopBar"), in: CustomCorner(corners: [.bottomRight], radius: getCornerRadius()))
                         .overlay(
+                            
                             // Top Nav View
                             HStack(spacing: 15) {
                                 
@@ -39,6 +40,20 @@ struct Home: View {
                                     Image(systemName: "xmark")
                                         .font(.body.bold())
                                 })
+                                
+                                // --------------------------------------------------------
+                                // ヘッダーを固定した時にこちらを表示
+                                Image("Pic")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .opacity(navBarTitleOpacity())
+                                Text("iJustine")
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .opacity(navBarTitleOpacity())
+                                // --------------------------------------------------------
                                 
                                 Spacer()
                                 
@@ -101,6 +116,14 @@ struct Home: View {
         let radius = value * maxCornerRadius
         
         return offset < 0 ? radius : maxCornerRadius
+    }
+    
+    func navBarTitleOpacity() -> CGFloat {
+        
+        let progress = -offset / (maxHeight - topEdge)
+        let opacity = progress < 0 ? 0 : progress
+        return opacity
+        
     }
 }
 
