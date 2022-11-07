@@ -13,7 +13,7 @@ struct Home: View {
     let maxHeight = UIScreen.main.bounds.height / 2.3
     let navHeight: CGFloat = 80
     var topEdge: CGFloat
-    
+    var maxCornerRadius: CGFloat = 50
     // Offset
     @State var offset: CGFloat = 0
     
@@ -30,7 +30,7 @@ struct Home: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: getHeaderHeight(), alignment: .bottom)
-                        .background(Color("TopBar"), in: CustomCorner(corners: [.bottomRight], radius: 50))
+                        .background(Color("TopBar"), in: CustomCorner(corners: [.bottomRight], radius: getCornerRadius()))
                         .overlay(
                             // Top Nav View
                             HStack(spacing: 15) {
@@ -88,6 +88,19 @@ struct Home: View {
         } else {
             return navHeight + topEdge
         }
+    }
+    
+    func getCornerRadius() -> CGFloat {
+        
+        // navHeader + topEdge以外のヘッダの高さ内でスクロールした分CornerRadiusのvalueを調整
+        let progress = -offset / (maxHeight - (navHeight + topEdge))
+        
+        let value = 1 - progress
+
+        // value = 1 ... 0
+        let radius = value * maxCornerRadius
+        
+        return offset < 0 ? radius : maxCornerRadius
     }
 }
 
